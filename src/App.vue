@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-      <router-view/>
+    <!--exclude="Detail" 把Detail 排除在外。每次点击退出，Detail不需要缓存记录数据-->
+    <keep-alive exclude="Detail">
+       <router-view/>
+    </keep-alive>
+     
       <main-tab-bar/>
   </div>
 </template> 

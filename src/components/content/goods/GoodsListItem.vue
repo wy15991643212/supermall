@@ -1,6 +1,6 @@
 <template>
-  <div class="goods-item">
-    <img :src="goodsItem.show.img" alt="">
+  <div class="goods-item" @click="itemClick">
+    <img :src="goodsItem.show.img" alt="" @load="imgLoad">
     <div class="goods-info">
         <p>{{goodsItem.title}}</p>
         <span class="price">{{goodsItem.price}}</span>
@@ -23,10 +23,20 @@ name: "GoodsListItem",
   data () {
     return {
     };
+  },
+  methods:{
+      //监听图片加载完成
+      imgLoad(){
+       //图片加载完成后，使用事件总线this.$bus.$emit("方法名")，发射事件,再在home里接收
+       this.$bus.$emit("itemImgLoad");
+      },
+      itemClick(){
+          this.$router.push('/detail/' + this.goodsItem.iid)
+      }
   }
 }
 
-</script>
+</script> 
 <style  scoped>
 .goods-item{
     padding: 5px;

@@ -4,6 +4,7 @@ import Home from "@/views/home/Home"
 import Category from "@/views/category/Category"
 import Cart from "@/views/cart/Cart" 
 import Profile from "@/views/profile/Profile"
+import Detail from "@/views/detail/Detail"
 
 Vue.use(Router)
 export default new Router({
@@ -28,6 +29,10 @@ export default new Router({
     {
       path:"/profile",
       component:Profile
+    },
+    {
+      path:"/detail/:iid",
+      component:Detail
     },
   ]
 })
