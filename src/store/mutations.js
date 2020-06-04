@@ -1,6 +1,8 @@
 import {
     ADD_COUNT,
-    ADD_TO_CAR
+    ADD_TO_CAR,
+    SUBTRACT_COUNT,
+    DELETE_GOOD
 } from "./mutation-types"
 export default {
     //mutatiaons mutation 必须是同步函数     mutatiaon可以状态跟踪
@@ -16,6 +18,16 @@ export default {
         // 给商品添加 checked属性，用于记录是否选中(默认选中)
         payload.checked = true
         state.carList.push(payload)
+    },
+    [SUBTRACT_COUNT](state, payload) {
+        if(payload.count > 1){
+            payload.count -= 1
+        }else{
+            payload.count = 1
+        }
+    },
+    [DELETE_GOOD](state, payload) {
+        state.carList.splice(payload,1)
     }
    
 }

@@ -3,3 +3,5 @@
 //对整个 app 包含的 mutation 一目了然
 export const ADD_COUNT = "ADD_COUNT"
 export const ADD_TO_CAR = "ADD_TO_CAR"
+export const SUBTRACT_COUNT = "SUBTRACT_COUNT"
+export const DELETE_GOOD = "DELETE_GOOD"
