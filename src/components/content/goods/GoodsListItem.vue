@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item" @click="itemClick">
-    <img :src="goodsItem.show.img" alt="" @load="imgLoad">
+    <img v-lazy="showImg" alt="" @load="imgLoad">
     <div class="goods-info">
         <p>{{goodsItem.title}}</p>
         <span class="price">{{goodsItem.price}}</span>
@@ -23,6 +23,14 @@ name: "GoodsListItem",
   data () {
     return {
     };
+  },
+  computed:{
+      // 因为detailComment页面复用了这个组件。两个数据img的路径不一样，所以在计算属性这里判断一下
+      //this.goodsItem.image 是detailComment 页面用的
+      //this.goodsItem.show.img 是home里用的
+        showImg(){
+          return this.goodsItem.img || this.goodsItem.image || this.goodsItem.show.img
+        }
   },
   methods:{
       //监听图片加载完成

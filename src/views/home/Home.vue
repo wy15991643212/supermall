@@ -25,8 +25,8 @@ import BackTop from "@/components/content/backTop/BackTop"
 import HomeSwiper from "./childComps/HomeSwiper"
 import RecommendViews from "./childComps/RecommendView"
 import FeatureView from "./childComps/FeatureView"
-import { getHomeMultidata, getHomeGoods } from "@/network/home"
-import { debounce } from "@/common/untils"
+import { getHomeMultidata, getHomeGoods} from "@/network/home"
+import {imgListenerMixin} from "@/common/mixin"
 export default {
     name: "Home",
     data() {
@@ -40,10 +40,11 @@ export default {
                 "sell": { page: 0, list: [] },
             },
             currentType: 'pop',
-            isShowBackTop: false,
             tabOffsetTop: 0,
             isTabControlShow:false,
-            saveY:0
+            saveY:0,
+            isShowBackTop:false
+            
         };
     },
     components: {
@@ -70,17 +71,19 @@ export default {
         this.getHomeGoods("new");
         this.getHomeGoods("sell");
     },
+    mixins:[imgListenerMixin],
     mounted() {
-        //图片加载完成的事件监听
-        const refresh = debounce(this.$refs.scroll.refresh, 200)
-        this.$bus.$on("itemImgLoad", () => {
-            // 监听goodsListItem中图片加载完成 ,完成后更新BScroll 的scrollerHeight
-            //    this.$refs.scroll && this.$refs.scroll.refresh();
-            refresh()
-        })
-    },
-    destroyed(){
-        // console.log("销毁了")
+        // //图片加载完成的事件监听
+        // const refresh = debounce(this.$refs.scroll.refresh, 200)
+        // this.itemImgListener = () => {
+        //     // 监听goodsListItem中图片加载完成 ,完成后更新BScroll 的scrollerHeight
+        //     //    this.$refs.scroll && this.$refs.scroll.refresh();
+        //     refresh()
+        // }
+        // this.$bus.$on("itemImgLoad", this.itemImgListener)
+
+        // 内容放入了mixin(混入)中
+        
     },
     activated(){
         //keep-alive是Vue提供的一个抽象组件，用来对组件进行缓存,在app.vue中包裹了 <router-view/>
@@ -91,8 +94,10 @@ export default {
         this.$refs.scroll.scrollTo(0,this.saveY,0)
     },
     deactivated(){
-        //离开
+        //离开保存Y值
         this.saveY = this.$refs.scroll.getScrollY()
+        //取消全局事件的监听
+        this.$bus.$off("itemImgLoad",this.itemImgListener)
     },
     methods: {
         //监听轮播图片是否加载完成

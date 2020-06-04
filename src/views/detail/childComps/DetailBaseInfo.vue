@@ -3,7 +3,7 @@
         <div class="info-title">{{goods.title}}</div>
         <div class="info-price">
             <span class="n-price">{{goods.newPrice}}</span>
-            <span class="o-price">{{goods.oldPrice}}</span>
+            <span class="h-price">{{goods.highPrice}}</span>
             <span v-if="goods.discount" class="discount">{{goods.discount}}</span>
         </div>
         <div class="info-other">
@@ -67,7 +67,7 @@ export default {
     color: var(--color-high-text);
   }
 
-  .info-price .o-price {
+  .info-price .h-price {
     font-size: 13px;
     margin-left: 5px;
     text-decoration: line-through;
